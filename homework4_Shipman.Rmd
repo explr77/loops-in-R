@@ -1,0 +1,310 @@
+---
+title: "INFS 691 - Homework 4"
+subtitle: Conditional Statements and Loops in R
+author: "Douglas Shipman"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+setwd("~/Desktop/__Loyola/INFS 691 Princ of Analytic Programming/HW/HW_4")
+
+I have typed Question 1 and opened the needed code chunks. Please enter the other questions from "homework4.docx" file and open the code chunks as needed.
+
+#### Question 1.
+Consider a day when the temperature is 34 degrees (temp=34) in Madison, Wisconsin.
+Using the "if" conditional statement, 
+(a)	determine if this (34 degrees) is a COLD or NOT COLD temperature. The temperature is considered to be cold if it is less than 32 degrees.
+```{r}
+temp=34
+if (temp < 32)
+{
+  print("COLD")
+}
+if (temp >= 32)
+{
+  print("NOT COLD")
+}
+```
+
+(b)	Determine if this (34 degrees) is a NEGATIVE value or NOT NEGATIVE value
+
+```{r}
+if (temp <= -1)
+{
+  print("NEGATIVE")
+}
+if (temp >= 0)
+{
+  print("NOT NEGATIVE")
+}
+```
+
+#### Question 2.
+Consider another day when the temperature is 0 degrees (temp=0) in Madison, Wisconsin.
+Using the "if" conditional statement, 
+(a)	determine if it is a COLD or NOT COLD temperature. The temperature is considered to be cold if it is less than 32 degrees.
+
+```{r}
+temp=0
+if (temp < 32)
+{
+  print("COLD")
+}
+if (temp >= 32)
+{
+  print("NOT COLD")
+}
+### These chunks were written using only if statements, per the instructions
+```
+
+
+(b)	Determine if it is a NEGATIVE, POSITIVE, or ZERO.
+Note: Zero is neither a positive nor a negative number. The numbers greater than zero (nil) are the positive numbers and the numbers less than zero are the negative numbers. For this question, use if else statement, not ifelse.
+
+```{r}
+if (temp > 0) {
+  print("POSITIVE")
+if (temp < 0) {
+  print("NEGATIVE")
+}
+  } else {
+        print("ZERO")
+      }
+```
+
+
+#### Question 3.
+Given below are the GMAT scores of randomly selected 6 students:
+GMAT: 500, 540, 710, 625, 490, 581
+The GMAT scores are classified as follows:
+(a)	Very High (VHIGH) if the score is 700 or higher
+High (HIGH) if  the score is between 600 (inclusive) and 700 (700 not included)
+Average (AVG) if  the score is between 500 (inclusive) and 600 (600 not included)
+low (LOW) if  the score is below 500
+Create a vector (GMAT) containing the  GMAT scores given above.
+
+```{r}
+gmat <- c(500, 540, 710, 625, 490, 581)
+```
+
+
+(b)	Classify these scores as VHIGH, HIGH, AVG, and LOW by using the if...else statements (not ifelse)  The classified values are to be stored in the vector "level".
+
+```{r}
+for (i in gmat) {
+if (i >= 700) {
+  print("VHIGH")
+} else if (i >= 600) {
+  print("HIGH")
+} else if (i >= 500) {
+  print("AVG")
+} else {
+  print("LOW")
+}
+}
+```
+
+
+#### Question 4.
+Consider two variables: grade1 and grade2, denoting the grades in exam 1 and exam 2, respectively.
+grade1 <- 60
+grade2 <- 90
+Generate a ‘course score’, cScore, based on the values of grade1 and grade2, based on the following behavior:
+•	If both grade1 and grade2 are 70 or higher, set cScore equal to double the sum of grade1 and grade2.
+•	If both grade1 and grade2 are strictly below 65, set cScore equal to half the sum of grade1 and grade2.
+•	In all other cases, set cScore equal to the sum of grade1 and grade2.
+Print the resulting cScore variable.
+
+
+```{r}
+grade1 <- 60
+grade2 <- 90
+gradeAll <- c(grade1,grade2)
+
+cScore <- 0
+
+if (grade1 > 70 & grade2 > 70) {
+  cScore <- sum(gradeAll)*2
+} else if (grade1 < 65 & grade2 < 65) {
+  cScore <- sum(gradeAll)/2
+} else {
+  cScore <- sum(gradeAll)
+}
+cScore
+```
+
+Using "for" loops
+#### Question 5.
+Consider the GMAT scores given in Question 3.
+GMAT: 500, 540, 710, 625, 490, 581
+(a)	Count the number of odd scores (ODDS) and number the even scores (EVENS) in the vector of GMAT scores. Display ODDS and EVENS.
+
+```{r}
+cEven <- 0
+cOdd <- 0
+for(val in gmat) {
+  if (val%%2 == 0) cEven <- cEven + 1
+}
+for(val in gmat) {
+  if (val%%2 != 0) cOdd <- cOdd + 1
+}
+cat("EVENS =", cEven, "& ODDS =", cOdd)
+
+```
+
+
+(b)	Calculate the sum of the GMAT scores by using the "for" loop. sum(GMAT) is not accepted.
+
+```{r}
+gmatSum <- 0
+for(i in 1:6) {
+  gmatSum <- gmatSum + gmat[i]
+}
+gmatSum
+```
+
+
+(c)	Print only the GMAT scores that are even. (you can use next statement in the for loop)
+
+```{r}
+for(i in 1:length(gmat)) {
+  if (gmat[i] %%2 != 0) next
+  print(gmat[i])
+}
+```
+
+
+(d)	Print the first four GMAT scores. (You can use break statement in the for loop)
+
+```{r}
+for(i in 1:6) {
+  if (i > 4) break
+  print(gmat[i])
+}
+```
+
+
+#### Question 6.
+The file "grades.csv" contains the grades of 40 students on the undergraduate business core courses. The partial table below shows the grades of first 5 students. 
+ 
+(a)	Calculate the total score on the core courses for the first student (LUC332).
+
+```{r}
+grades <- read.csv("grades.csv")
+
+totalScore <-  0
+
+for(i in 2:ncol(grades))
+  totalScore <- totalScore + grades[1,i]
+
+totalScore
+```
+
+
+(b)	Calculate the total score for all 40 students. These total scores should be stored in a vector called as "sumRow", where sumRow[1] is the total score for student 1, …, sumRow[40] is the total score for student 40.  You can use two "for" loops for this question.
+
+
+```{r}
+sumRow <- numeric(nrow(grades))
+for (i in 1:nrow(grades))
+for (j in 2:ncol(grades))
+sumRow[i] <- sumRow[i] + grades[i,j]
+sumRow
+```
+
+
+Using "while" loop
+#### Question 7.
+Consider the GMAT scores given in Question 3.
+GMAT: 500, 540, 710, 625, 490, 581
+Using the "while" loop, print the first three GMAT scores in the vector. 
+
+```{r}
+count <- 1
+while (count < 4) {
+  print(gmat[count])
+  count <- count+1
+}
+```
+
+
+Bonus Question  (1.0 point)
+Using "for" loop and "if" statements
+#### Question 8.
+The file "univHousefor691.csv" contains the housing information in the towns of University of Michigan (MICH), University of Illinois (ILL), University of Wisconsin (WISC), and the Penn State University (PENN).
+Calculate the number of houses in each of these towns (countMICH, countILL, countWISC, countPSU) and calculate the average house salePrice in each town (avgMICH, avgILL, avgWISC, avgPSU).
+You could answer this in either three steps: calculate the sum of the house prices (step1), number of houses (Step 2), and calculate the mean (Step 3) or all these three calculations in one combined step.
+
+```{r}
+hinfo <- read.csv("univHousefor691.csv")
+
+sumPriceMICH <- 0
+sumPriceILL <- 0
+sumPriceWISC <- 0
+sumPricePSU <- 0
+
+countMICH <- 0
+countILL <- 0
+countWISC <- 0
+countPSU <- 0
+
+for(i in 1:nrow(hinfo)){
+  if (hinfo[i,8] == "MICH"){
+  countMICH = countMICH + 1
+  sumPriceMICH = sumPriceMICH + hinfo[i,1]
+  } else if (hinfo[i,8] == "ILL"){
+  countILL = countILL + 1
+  sumPriceILL = sumPriceILL + hinfo[i,1]
+  } else if (hinfo[i,8] == "WISC"){
+  countWISC = countWISC + 1
+  sumPriceWISC = sumPriceWISC + hinfo[i,1]
+  } else if (hinfo[i,8] == "PSU"){
+  countPSU = countPSU + 1
+  sumPricePSU = sumPricePSU + hinfo[i,1]
+  }
+}
+avgMICH <- sumPriceMICH/countMICH
+avgILL <- sumPriceILL/countILL
+avgWISC <- sumPriceWISC/countWISC
+avgPSU <- sumPricePSU/countPSU
+
+
+
+df <- data.frame(Location = c("MICH", "ILL", "WISC", "PENN"),
+                 No_of_Homes = c(countMICH, countILL, countWISC, countPSU),
+                 Avg_Sale_Price = c(avgMICH, avgILL, avgWISC, avgPSU)
+)
+
+df
+
+```
+
+
+#### Creating html file
+Creating the html file: After completing your R Notebook or R Markdown file, you will execute all the chunks, save the file, and generate the html file containing the codes and the results. 
+
+To create the html file, complete the following steps:
+
+Step 1. Execute all chunks one by one starting from the first chunk (regardless of  whether you executed the codes while writing your codes).
+Step 2. Save your File->Save As…
+
+If you have completed Step 1, then Step 2 will save your Rmd file 
+and (at the same time) will create the html file on your working 
+directory. You will attach and submit this html file on Sakai as your homework1.
+
+Important: Please check the html file to make sure that it contains 
+           the R codes, outputs, and your answers. If not, repeat 
+           Step 1 and Step 2.
+           
+
+
+
+
+
+
+
+
+
+
+
